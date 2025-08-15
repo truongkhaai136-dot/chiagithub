@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trình xem GitHub chia đôi màn hình</title>
+    <title>Trình xem GitHub chia đôi màn hình (30/70)</title>
     <style>
         body, html {
             margin: 0;
@@ -48,23 +48,29 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
-            align-self: flex-end; /* Căn chỉnh nút với cuối ô input */
-            height: 42px; /* Đặt chiều cao bằng ô input */
+            align-self: flex-end;
+            height: 42px;
         }
         #load-btn:hover {
             background-color: #218838;
         }
         .content-container {
             display: flex;
-            flex: 1; /* Lấp đầy không gian còn lại */
+            flex: 1;
         }
         .panel {
-            flex: 1; /* Mỗi bên chiếm 50% */
             height: 100%;
             border-left: 1px solid #ccc;
         }
         .panel:first-child {
             border-left: none;
+        }
+        /* --- THAY ĐỔI TỶ LỆ TẠI ĐÂY --- */
+        #panel-left {
+            flex: 3; /* Chiếm 3 phần */
+        }
+        #panel-right {
+            flex: 7; /* Chiếm 7 phần */
         }
         iframe {
             width: 100%;
@@ -77,35 +83,32 @@
 
     <div class="input-container">
         <div class="input-group">
-            <label for="url1">Liên kết bên trái</label>
+            <label for="url1">Liên kết bên trái (30%)</label>
             <input type="text" id="url1" placeholder="Dán link GitHub thứ nhất...">
         </div>
         <div class="input-group">
-            <label for="url2">Liên kết bên phải</label>
+            <label for="url2">Liên kết bên phải (70%)</label>
             <input type="text" id="url2" placeholder="Dán link GitHub thứ hai...">
         </div>
         <button id="load-btn">Tải</button>
     </div>
 
     <div class="content-container">
-        <div class="panel">
+        <div id="panel-left" class="panel">
             <iframe id="iframe1" src="about:blank"></iframe>
         </div>
-        <div class="panel">
+        <div id="panel-right" class="panel">
             <iframe id="iframe2" src="about:blank"></iframe>
         </div>
     </div>
 
     <script>
-        // Hàm chuyển đổi URL GitHub thành URL xem trước
         function getPreviewUrl(githubUrl) {
             if (!githubUrl) return "about:blank";
-            // Sử dụng dịch vụ htmlpreview.github.io để render file từ GitHub
             return 'https://htmlpreview.github.io/?' + githubUrl;
         }
 
         document.getElementById('load-btn').addEventListener('click', function() {
-            // Lấy URL từ hai ô input
             const url1 = document.getElementById('url1').value.trim();
             const url2 = document.getElementById('url2').value.trim();
 
@@ -114,7 +117,6 @@
                 return;
             }
 
-            // Cập nhật nguồn cho từng iframe tương ứng
             document.getElementById('iframe1').src = getPreviewUrl(url1);
             document.getElementById('iframe2').src = getPreviewUrl(url2);
         });
