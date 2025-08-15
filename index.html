@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình xem GitHub song song</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f2f5;
+        }
+        .container {
+            display: flex;
+            flex: 1; /* Cho phép container lấp đầy không gian còn lại */
+            width: 100%;
+            height: calc(100vh - 70px); /* Chiều cao trừ đi phần input */
+        }
+        .panel {
+            flex: 1;
+            height: 100%;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Đảm bảo padding và border không làm tăng kích thước */
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .input-bar {
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #github-url {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #load-btn {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #load-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="input-bar">
+        <input type="text" id="github-url" placeholder="Dán link GitHub vào đây (ví dụ: https://github.com/user/repo/blob/main/index.html)">
+        <button id="load-btn">Tải</button>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <iframe id="iframe1" src="about:blank"></iframe>
+        </div>
+        <div class="panel">
+            <iframe id="iframe2" src="about:blank"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('load-btn').addEventListener('click', function() {
+            // Lấy URL từ input
+            const githubUrl = document.getElementById('github-url').value.trim();
+
+            if (githubUrl) {
+                // Chuyển đổi URL GitHub thông thường thành URL có thể xem trước
+                const previewUrl = 'https://htmlpreview.github.io/?' + githubUrl;
+
+                // Cập nhật nguồn cho cả hai iframe
+                document.getElementById('iframe1').src = previewUrl;
+                document.getElementById('iframe2').src = previewUrl;
+            } else {
+                alert('Vui lòng nhập một URL GitHub.');
+            }
+        });
+    </script>
+
+</body>
+</html>
