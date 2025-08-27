@@ -3,124 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trình xem GitHub chia đôi màn hình (30/70)</title>
+    <title>Công cụ đa nhiệm PDF & Mindmap</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            font-family: sans-serif;
+            background-color: #1a1a1a;
+        }
+
+        .container {
             display: flex;
-            flex-direction: column;
-            background-color: #f0f2f5;
+            height: 100vh;
         }
-        .input-container {
-            padding: 15px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            justify-content: space-around;
-        }
-        .input-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .input-group label {
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #333;
-        }
-        .input-group input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        #load-btn {
-            padding: 10px 20px;
-            border: none;
-            background-color: #28a745;
-            color: white;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            align-self: flex-end;
-            height: 42px;
-        }
-        #load-btn:hover {
-            background-color: #218838;
-        }
-        .content-container {
-            display: flex;
-            flex: 1;
-        }
+        
+        /* Cấu hình chung cho cả hai iframe */
         .panel {
-            height: 100%;
-            border-left: 1px solid #ccc;
+            flex-grow: 1;
+            border: none;
+            box-sizing: border-box;
+            padding: 5px;
         }
-        .panel:first-child {
-            border-left: none;
+        
+        /* Cột bên trái cho PDF */
+        .panel.pdf-viewer {
+            flex-grow: 1;
         }
-        /* --- THAY ĐỔI TỶ LỆ TẠI ĐÂY --- */
-        #panel-left {
-            flex: 3; /* Chiếm 3 phần */
+        
+        /* Cột bên phải cho Mindmap, chiếm nhiều không gian hơn */
+        .panel.mindmap {
+            flex-grow: 3;
         }
-        #panel-right {
-            flex: 7; /* Chiếm 7 phần */
-        }
+        
         iframe {
             width: 100%;
             height: 100%;
-            border: none;
+            border: 1px solid #333;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-
-    <div class="input-container">
-        <div class="input-group">
-            <label for="url1">Liên kết bên trái (30%)</label>
-            <input type="text" id="url1" placeholder="Dán link GitHub thứ nhất...">
+    <div class="container">
+        <div class="panel pdf-viewer">
+            <iframe src="ĐƯỜNG_DẪN_ĐẾN_PDF_VIEWER_TRÊN_GITHUB.html" title="PDF Viewer"></iframe>
         </div>
-        <div class="input-group">
-            <label for="url2">Liên kết bên phải (70%)</label>
-            <input type="text" id="url2" placeholder="Dán link GitHub thứ hai...">
-        </div>
-        <button id="load-btn">Tải</button>
-    </div>
-
-    <div class="content-container">
-        <div id="panel-left" class="panel">
-            <iframe id="iframe1" src="about:blank"></iframe>
-        </div>
-        <div id="panel-right" class="panel">
-            <iframe id="iframe2" src="about:blank"></iframe>
+        
+        <div class="panel mindmap">
+            <iframe src="ĐƯỜNG_DẪN_ĐẾN_MINDMAP_TRÊN_GITHUB.html" title="Mindmap Creator"></iframe>
         </div>
     </div>
-
-    <script>
-        function getPreviewUrl(githubUrl) {
-            if (!githubUrl) return "about:blank";
-            return 'https://htmlpreview.github.io/?' + githubUrl;
-        }
-
-        document.getElementById('load-btn').addEventListener('click', function() {
-            const url1 = document.getElementById('url1').value.trim();
-            const url2 = document.getElementById('url2').value.trim();
-
-            if (!url1 && !url2) {
-                alert('Vui lòng nhập ít nhất một URL.');
-                return;
-            }
-
-            document.getElementById('iframe1').src = getPreviewUrl(url1);
-            document.getElementById('iframe2').src = getPreviewUrl(url2);
-        });
-    </script>
-
 </body>
 </html>
